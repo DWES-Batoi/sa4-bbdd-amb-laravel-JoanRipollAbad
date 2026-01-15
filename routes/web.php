@@ -14,12 +14,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-// ✅ Públicos: SOLO index (para evitar conflicto con /create)
+// Públicos: SOLO index (para evitar conflicto con /create)
 Route::resource('equips', EquipController::class)->only(['index']);
 Route::resource('estadis', EstadiController::class)->only(['index']);
 
 
-// 🔒 Protegidos: crear/editar/borrar (y store/update/destroy)
+// Protegidos: crear/editar/borrar (y store/update/destroy)
 Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,8 +31,18 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// ✅ Públicos: show AL FINAL (así /create no lo captura {id})
+// Públicos: show AL FINAL (así /create no lo captura {id})
 Route::resource('equips', EquipController::class)->only(['show']);
 Route::resource('estadis', EstadiController::class)->only(['show']);
+
+// Ejmeplo de protección
+Route::middleware(['auth'])->group(function () {
+    Route::get('/solo-admin', function () {
+        if (Auth::user()->role !== 'administrador') {
+            abort(403, 'No tienes permiso');
+        }
+        return "Bienvenido, Administrador";
+    });
+});
 
 require __DIR__.'/auth.php';

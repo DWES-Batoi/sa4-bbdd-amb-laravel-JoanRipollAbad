@@ -36,7 +36,8 @@ test:
 	docker compose run --rm app php artisan test -q
 
 artisan:
-	@docker compose run --rm app php artisan $(CMD)
+	@docker compose exec -u root app php artisan $(CMD)
+	@sudo chown -R $(shell id -u):$(shell id -g) .
 	@true
 
 composer:
