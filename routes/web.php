@@ -3,46 +3,46 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EquipController;
 use App\Http\Controllers\EstadiController;
+use App\Http\Controllers\JugadoraController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Ruta para cambiar idioma
+Route::get('/locale/{locale}', function (string $locale) {
+    $available = ['ca', 'es', 'en'];
+    if (!in_array($locale, $available, true)) {
+        $locale = config('app.fallback_locale', 'en');
+    }
+    Session::put('locale', $locale);
+    return redirect()->back();
+})->name('setLocale');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-// Públicos: SOLO index (para evitar conflicto con /create)
+// Públicos: SOLO index
 Route::resource('equips', EquipController::class)->only(['index']);
 Route::resource('estadis', EstadiController::class)->only(['index']);
+Route::resource('jugadoras', JugadoraController::class)->only(['index']);
 
-
-// Protegidos: crear/editar/borrar (y store/update/destroy)
+// Protegidos: crear/editar/borrar
 Route::middleware('auth')->group(function () {
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('equips', EquipController::class)->except(['index', 'show']);
     Route::resource('estadis', EstadiController::class)->except(['index', 'show']);
+    Route::resource('jugadoras', JugadoraController::class)->except(['index', 'show']);
 });
 
-
-// Públicos: show AL FINAL (así /create no lo captura {id})
 Route::resource('equips', EquipController::class)->only(['show']);
 Route::resource('estadis', EstadiController::class)->only(['show']);
-
-// Ejmeplo de protección
-Route::middleware(['auth'])->group(function () {
-    Route::get('/solo-admin', function () {
-        if (Auth::user()->role !== 'administrador') {
-            abort(403, 'No tienes permiso');
-        }
-        return "Bienvenido, Administrador";
-    });
-});
+Route::resource('jugadoras', JugadoraController::class)->only(['show']);
 
 require __DIR__.'/auth.php';

@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jugadora extends Model {
     use HasFactory;
-    protected $fillable = ['nom', 'equip_id', 'data_naixement', 'dorsal', 'foto'];
+    //protected $fillable = ['nom', 'equip_id', 'data_naixement', 'dorsal', 'foto'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function equip() {
         return $this->belongsTo(Equip::class);

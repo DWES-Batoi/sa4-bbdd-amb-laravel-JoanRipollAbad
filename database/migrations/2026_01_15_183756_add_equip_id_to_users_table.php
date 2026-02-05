@@ -9,7 +9,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // Forma “Laravel moderna” i més neta:
             $table->foreignId('equip_id')
                 ->nullable()
                 ->constrained('equips')

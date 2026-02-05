@@ -14,7 +14,8 @@ class Equip extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nom', 'estadi_id', 'titols', 'escut'];
+    //protected $fillable = ['nom', 'estadi_id', 'titols', 'escut'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     /**
      * Un equip pertany a un estadi
