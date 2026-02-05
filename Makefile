@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-
+.PHONY: up down reset sh logs install migrate test artisan
 up:
 	docker compose up -d --build
 
@@ -36,6 +36,10 @@ test:
 	docker compose run --rm app php artisan test -q
 
 artisan:
-	@docker compose run --rm app php artisan $(CMD)
+	@docker compose exec -u root app php artisan $(CMD)
+	@sudo chown -R $(shell id -u):$(shell id -g) .
 	@true
 
+composer:
+	@docker compose run --rm app composer $(CMD)
+	@true

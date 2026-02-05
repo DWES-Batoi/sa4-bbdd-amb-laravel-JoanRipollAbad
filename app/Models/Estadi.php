@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * MODEL ESTADI
+ */
+class Estadi extends Model
+{
+    use HasFactory;
+
+    //protected $fillable = ['nom', 'capacitat'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
+    /**
+     * Un estadi té molts equips
+     */
+    public function equips()
+    {
+        return $this->hasMany(Equip::class);
+    }
+}

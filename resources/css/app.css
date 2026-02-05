@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 1rem;
+}
+
+.card {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.card__title {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.card__badge {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    background: #f3f4f6;
+    border-radius: 999px;
+    color: #4b5563;
+}
+
+.card__body p {
+    margin: 6px 0;
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+.card__footer {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    border: 1px solid #e5e7eb;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background: #f9fafb;
+}
+
+.btn--primary {
+    background: #1e40af;
+    color: white;
+    border-color: #1d4ed8;
+}
+
+.btn--primary:hover {
+    background: #1d4ed8;
+}
+
+.btn--ghost {
+    background: #f9fafb;
+    color: #1f2937;
+}
+
+.btn--danger {
+    background: #fee2e2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+.btn--danger:hover {
+    background: #fee2e2;
+}
